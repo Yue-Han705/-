@@ -1,6 +1,8 @@
 import tkinter as tk
 from PIL import ImageTk, Image
 import random
+import sys
+import os
 
 class Application(tk.Frame):
     def __init__(self, master=None, title="毛毛腿"):
@@ -17,6 +19,13 @@ class Application(tk.Frame):
         # Place the window in the middle of the screen
         master.eval('tk::PlaceWindow %s center' % master.winfo_pathname(master.winfo_id()))
     
+    def get_image_path():
+        try:
+            wd = sys._MEIPASS
+        except AttributeError:
+            wd = os.getcwd()
+        return os.path.join(wd, "cat.jpeg")
+    
     def on_closing(self):
         pass
 
@@ -27,7 +36,7 @@ class Application(tk.Frame):
         self.likeyou_label.grid(row=0, columnspan=2)
 
         # Display image
-        photo = ImageTk.PhotoImage(Image.open("cat.jpeg"))
+        photo = ImageTk.PhotoImage(Image.open(Application.get_image_path()))
         self.likeyou_image = tk.Label(self, image=photo)
         self.likeyou_image.image = photo
         self.likeyou_image.grid(row=1, columnspan=2)
